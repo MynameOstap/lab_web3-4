@@ -1,0 +1,38 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: antiquewhite;
+    border-radius: 10px;
+    
+}
+.header__left{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+.header__right{
+    display: flex;
+    gap: 2rem;
+   
+}
+
+.header__right.header__right--hidden{
+    display: none;
+}
+
+
+.tabs{
+    list-style-type: none; 
+    padding: 0;            
+    margin: 0;
+    display: flex;
+    gap: 2rem;
+    font-size: 1.2rem;
+    cursor: pointer;             
+
+}
+
+.tab--active {
+    background-color: #858585;
+}

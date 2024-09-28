@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body>
+
+    <header class="container">
+        <div class="header">
+            <div class="header__left">
+                <h2>My Zoo</h2>
+                <ul class="tabs">
+                    <li class="tab tab--active" id="all_animals_but">My animals</li>
+                    <li class="tab" id="create_animal_but">Create animals</li>
+                </ul>
+
+            </div>
+            <div class="header__right all_animals_content">
+                <input type="text" placeholder="Type something...">
+                <a>Seacrh</a>
+                <a>Clear</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="container">
+        <div class="all_animals_content">
+            <div class="my__animals">
+                <div class="my__animals--left">
+                    <div>
+                        <h1>Manage Animals</h1>
+                        <div class="sort__title">
+                            <p>Sort the most expensive animals </p>
+                            <div>swicher</div>
+                        </div>
+                        <hr class="horizontal-hr">
+                        <h1>Count daily expenses:</h1>
+                        <button>Count</button>
+                        <div>
+                            <p>Total expenses:</p>
+
+                        </div>
+                        <div class="vertical-line"></div>
+
+                    </div>
+
+                </div>
+                <div class="vertical__hr"></div>
+
+                <div class="my__animals--right" id="animal_card_list">
+
+                </div>
+                <div class="card content--hidden" id="cardi">
+                    <img src="" class="card__img" id="img__card">
+                    <h2 id="title__card"></h2>
+                    <p class="card__p" id="p1__card"></p>
+                    <p class="card__p" id="p2__card"></p>
+                    <div class="buttons">
+                        <button id="edit_animal_but">Edit</button>
+                        <button id="card__remove">Remove</button>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="create_animal_content create__animals content--hidden">
+            <h1 id="title_cr_ed">Create Animals</h1>
+
+            <div class="create__animals--paragraph">
+                <p>Animals</p>
+                <input type="text" placeholder="Type something..." class="input" id="animals__name">
+            </div>
+
+            <div class="create__animals--paragraph">
+                <p>Description</p>
+                <input type="text" placeholder="Type something..." class="description input" id="description">
+            </div>
+
+            <div class="create__animals--paragraph">
+                <p>Daily expense</p>
+                <input type="number" min="1" max="100" class="input" id="daily__expense">
+            </div>
+
+            <div class="create__animals--paragraph">
+                <p>Animals type</p>
+                <select id="type__animals" name="animal" class="input">
+                    <option value="dog">Собака</option>
+                    <option value="cat">Кіт</option>
+                    <option value="hamster">Хом'як</option>
+                    <option value="parrot">Папуга</option>
+                </select>
+            </div>
+
+            <button onclick="on_submit_click()">Submit</button>
+        </div>
+
+
+
+    </section>
+
+</body>
+
+<script src="./js/tabs.js"></script>
+
+
+</html>

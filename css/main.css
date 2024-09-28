@@ -1,0 +1,94 @@
+
+.create__animals{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.create__animals--paragraph {
+    display: flex;
+    flex-direction: column; 
+    margin-bottom: 2rem;
+    
+}
+
+.create__animals--paragraph p {
+    margin: 0; 
+    margin-bottom: 0.2rem; 
+}
+
+.description{
+    height: 5rem;
+    width: 11rem;
+}
+.input{
+    border-radius: 7px;
+    width: 10vw;
+}
+.my__animals {
+    display: flex; 
+    height: 100%; 
+}
+
+.my__animals--left {
+    flex-basis: 20%;
+    border-right: 1px solid black;
+    padding: 1rem;
+     
+    
+}
+  .my__animals--right {
+    display: flex;
+    flex-basis: 80%; 
+
+  }
+
+
+  .vertical__hr {
+    width: 1px;            
+    height: 100%;        
+    background-color: black; 
+    border: none;          
+    margin: 1rem 1rem;        
+}
+
+.sort__title{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 250px;
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    text-align: start;
+    padding-left: 2rem;
+    height: 18rem;
+}
+
+.card__img{
+    width: 100%;
+    height: 50%;
+}
+
+.card__p{
+    margin: 0.2rem;
+
+}
+
+.my__animals--right{
+    flex-wrap: wrap;
+}
+
+.buttons{
+    display: flex;
+    gap: 2rem;
+}

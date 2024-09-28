@@ -1,0 +1,21 @@
+.content--hidden {
+    display: none !important;
+}
+
+body{
+    margin: 0;
+}
+.container{
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
+}
+
+.header{
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+section{
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
