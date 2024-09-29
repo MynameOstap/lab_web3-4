@@ -2,6 +2,7 @@
 
 let animals = [];
 
+
 let currently_edited_animal = null;
 
 const animals_name = document.getElementById('animals__name');
@@ -19,7 +20,7 @@ function on_submit_click(){
     if (currently_edited_animal === null) {
            
             animals.push({name: animals_name_v, description: description_v,
-            daily_expense: daily_expense_v, type_animal: type_animal_v
+            daily_expense: Number(daily_expense_v), type_animal: type_animal_v
         })
     } else {
         currently_edited_animal.name = animals_name_v
@@ -64,7 +65,7 @@ function generate_card(animal_obj, indx) {
     card_p1.innerHTML = animal_obj.description
     card_p2.innerHTML = animal_obj.daily_expense
     rem_but.addEventListener("click", () => {
-        animals.splice(indx,1)
+        animals.splice(indx, 1)
         update_cards()
     });
 
@@ -138,6 +139,53 @@ for (let key in tab_data) {
 }
 
 function update_cards() {
-    const node_list = animals.map(generate_card);
+    const filtered = get_animals(animals)
+    const node_list = filtered.map(generate_card);
     animal_list_node.replaceChildren(...node_list);
 }
+
+
+const toggleSwitch = document.getElementById("toggleSwitch")
+
+toggleSwitch.addEventListener("click", function() {
+  this.classList.toggle("active");
+  
+    animals.sort((a, b) => b.daily_expense - a.daily_expense);
+    update_cards()
+});
+
+const counter = document.getElementById('counter')
+const count_but = document.getElementById('count_but')
+count_but.addEventListener("click", () => count_expense(animals))
+function count_expense(animals){
+
+    let sum = animals.reduce((total, animal) => total + animal.daily_expense,0)
+    counter.innerHTML = sum
+}
+
+let search_str = null
+
+const search_input = document.getElementById("search_txt")
+const search_but = document.getElementById("search_but")
+search_but.addEventListener("click",() => {
+    search_str = search_input.value
+    update_cards()
+})
+
+
+
+
+
+function get_animals(animals){
+    if(search_str !== null){
+        return a.filter((animal) => animal.name.startsWith(search_str))
+        
+    }
+    return animals
+}
+
+const clear_but = document.getElementById("clear_but")
+clear_but.addEventListener("click", () => {
+    search_str = null
+    update_cards()
+})
