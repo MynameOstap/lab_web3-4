@@ -51,7 +51,7 @@ const img_urls = {
 function generate_card(animal_obj, indx) {
     const card = document.getElementById('cardi').cloneNode(true);
     card.removeAttribute("id");
-    card.classList.remove("content--hidden")
+    card.classList.remove("content--hidden ")
     const card_img = card.querySelector("#img__card")
     const card_title = card.querySelector("#title__card")
     const card_p1 = card.querySelector("#p1__card")
@@ -64,7 +64,7 @@ function generate_card(animal_obj, indx) {
     card_p1.innerHTML = animal_obj.description
     card_p2.innerHTML = animal_obj.daily_expense
     rem_but.addEventListener("click", () => {
-        animals.splice(indx,1)
+        animals.splice(indx, 1)
         update_cards()
     });
 
