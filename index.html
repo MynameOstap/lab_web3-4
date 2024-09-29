@@ -14,16 +14,16 @@
         <div class="header">
             <div class="header__left">
                 <h2>My Zoo</h2>
-                <ul class="tabs">
-                    <li class="tab tab--active" id="all_animals_but">My animals</li>
-                    <li class="tab" id="create_animal_but">Create animals</li>
-                </ul>
+                <div class="tabs">
+                    <div class="tab tab--active" id="all_animals_but"><li  >My animals</li></div>
+                    <div class="tab" id="create_animal_but"><li >Create animals</li></div>
+                </div>
 
             </div>
             <div class="header__right all_animals_content">
-                <input type="text" placeholder="Type something...">
-                <a>Seacrh</a>
-                <a>Clear</a>
+                <input type="text" id="search_txt" placeholder="Type something...">
+                <button id="search_but">Search</button>
+                <button id="clear_but">Clear</button> 
             </div>
         </div>
     </header>
@@ -36,13 +36,16 @@
                         <h1>Manage Animals</h1>
                         <div class="sort__title">
                             <p>Sort the most expensive animals </p>
-                            <div>swicher</div>
+                            <div class="switch" id="toggleSwitch">
+                                <div class="slider"></div>
+                            </div>
                         </div>
                         <hr class="horizontal-hr">
                         <h1>Count daily expenses:</h1>
-                        <button>Count</button>
-                        <div>
+                        <button id="count_but">Count</button>
+                        <div class="container___expense">
                             <p>Total expenses:</p>
+                            <p id="counter">0</p>
 
                         </div>
                         <div class="vertical-line"></div>
@@ -97,7 +100,7 @@
                 </select>
             </div>
 
-            <button onclick="on_submit_click()">Submit</button>
+            <button id="submit_but" onclick="on_submit_click()">Submit </button>
         </div>
 
 
