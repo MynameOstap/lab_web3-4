@@ -3,43 +3,67 @@
 let animals = [];
 
 
-let currently_edited_animal = null;
+let currently_edited_id = null;
 
 const animals_name = document.getElementById('animals__name');
 const description = document.getElementById('description');
 const daily_expense = document.getElementById('daily__expense');
 const type_animal = document.getElementById('type__animals');
 
-function on_submit_click(){
-    
+async function on_submit_click() {
+
     const animals_name_v = animals_name.value;
     const description_v = description.value;
     const daily_expense_v = daily_expense.value;
     const type_animal_v = type_animal.value;
+
     document.getElementById("title_cr_ed").innerHTML = "Create animals";
-    if (currently_edited_animal === null) {
-           
-            animals.push({name: animals_name_v, description: description_v,
-            daily_expense: Number(daily_expense_v), type_animal: type_animal_v
-        })
-    } else {
-        currently_edited_animal.name = animals_name_v
-        currently_edited_animal.description = description_v
-        currently_edited_animal.daily_expense = daily_expense_v
-        currently_edited_animal.type_animal = type_animal_v
-
-        currently_edited_animal = null
+    const animal = {
+        name: animals_name_v, description: description_v,
+        daily_expense: Number(daily_expense_v), type_animal: type_animal_v
     }
+    let resp 
     
+    if (currently_edited_id === null) {
 
-    console.log(animals)
 
-    animals_name.value = ''
-    description.value = ''
-    daily_expense.value = ''
-    type_animal.value = ''
+        resp = await fetch('/srv/', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(animal)
+        })
+
+
+
+    } else {
+        const id = currently_edited_id
+        currently_edited_id = null
+        resp = await fetch(`/srv/animals/${id}`, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(animal)
+        })
+
+    }
+    if (resp.ok){
+        animals_name.value = ''
+        description.value = ''
+        daily_expense.value = ''
+        type_animal.value = ''
 
     on_click_tab("all")
+        update_cards()
+    } else{
+        alert("BOOM!")
+    }
+
+
+
+    
 }
 
 const img_urls = {
@@ -57,30 +81,33 @@ function generate_card(animal_obj, indx) {
     const card_title = card.querySelector("#title__card")
     const card_p1 = card.querySelector("#p1__card")
     const card_p2 = card.querySelector("#p2__card")
-    const rem_but= card.querySelector("#card__remove")
+    const rem_but = card.querySelector("#card__remove")
     const ed_but = card.querySelector("#edit_animal_but")
 
     card_img.src = img_urls[animal_obj.type_animal]
     card_title.innerHTML = animal_obj.name
     card_p1.innerHTML = animal_obj.description
     card_p2.innerHTML = animal_obj.daily_expense
-    rem_but.addEventListener("click", () => {
-        animals.splice(indx, 1)
-        update_cards()
+    rem_but.addEventListener("click", async () => {
+        const resp = await fetch(`/srv/animals/${indx}`, {
+            method: "DELETE"
+
+        })
+
     });
 
     ed_but.addEventListener("click", () => {
         document.getElementById("title_cr_ed").innerHTML = "Edit animals";
         on_click_tab("create");
-        setup_edit(animal_obj);
+        setup_edit(animal_obj, indx);
 
-       
+
     })
 
     return card;
 }
 
-function setup_edit(animal_obj){
+function setup_edit(animal_obj, id) {
 
 
     animals_name.value = animal_obj.name
@@ -88,7 +115,7 @@ function setup_edit(animal_obj){
     daily_expense.value = animal_obj.daily_expense
     type_animal.value = animal_obj.type_animal
 
-    currently_edited_animal = animal_obj
+    currently_edited_id = id
 
 }
 
@@ -114,16 +141,16 @@ function on_click_tab(key) {
 
     for (let tab_name in tab_data) {
         tab_data[tab_name].button.classList.remove("tab--active");
-        for (let elem of tab_data[tab_name].content){
+        for (let elem of tab_data[tab_name].content) {
             elem.classList.add("content--hidden");
         }
-        
+
     }
 
 
     tab_data[key].button.classList.add("tab--active");
 
-    for (let elem of tab_data[key].content){
+    for (let elem of tab_data[key].content) {
         elem.classList.remove("content--hidden");
     }
     if ('callback' in tab_data[key]) {
@@ -138,7 +165,17 @@ for (let key in tab_data) {
     });
 }
 
-function update_cards() {
+async function update_cards() {
+    let animals = []
+    try {
+        animals = await fetch('/srv/animals', {
+            method: 'GET'
+
+        }).then((resp) => resp.json())
+    } catch (e) {
+        console.log(e)
+    }
+
     const filtered = get_animals(animals)
     const node_list = filtered.map(generate_card);
     animal_list_node.replaceChildren(...node_list);
@@ -147,9 +184,9 @@ function update_cards() {
 
 const toggleSwitch = document.getElementById("toggleSwitch")
 
-toggleSwitch.addEventListener("click", function() {
-  this.classList.toggle("active");
-  
+toggleSwitch.addEventListener("click", function () {
+    this.classList.toggle("active");
+
     animals.sort((a, b) => b.daily_expense - a.daily_expense);
     update_cards()
 });
@@ -157,9 +194,9 @@ toggleSwitch.addEventListener("click", function() {
 const counter = document.getElementById('counter')
 const count_but = document.getElementById('count_but')
 count_but.addEventListener("click", () => count_expense(animals))
-function count_expense(animals){
+function count_expense(animals) {
 
-    let sum = animals.reduce((total, animal) => total + animal.daily_expense,0)
+    let sum = animals.reduce((total, animal) => total + animal.daily_expense, 0)
     counter.innerHTML = sum
 }
 
@@ -167,7 +204,7 @@ let search_str = null
 
 const search_input = document.getElementById("search_txt")
 const search_but = document.getElementById("search_but")
-search_but.addEventListener("click",() => {
+search_but.addEventListener("click", () => {
     search_str = search_input.value
     update_cards()
 })
@@ -176,10 +213,10 @@ search_but.addEventListener("click",() => {
 
 
 
-function get_animals(animals){
-    if(search_str !== null){
-        return a.filter((animal) => animal.name.startsWith(search_str))
-        
+function get_animals(animals) {
+    if (search_str !== null) {
+        return animals.filter((animal) => animal.name.startsWith(search_str))
+
     }
     return animals
 }
@@ -189,3 +226,5 @@ clear_but.addEventListener("click", () => {
     search_str = null
     update_cards()
 })
+
+update_cards()
