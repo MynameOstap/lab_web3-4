@@ -73,7 +73,7 @@ const img_urls = {
     parrot: '/img/parrot.jpg',
 };
 
-function generate_card(animal_obj, indx) {
+function generate_card(animal_obj) {
     const card = document.getElementById('cardi').cloneNode(true);
     card.removeAttribute("id");
     card.classList.remove("content--hidden")
@@ -89,17 +89,18 @@ function generate_card(animal_obj, indx) {
     card_p1.innerHTML = animal_obj.description
     card_p2.innerHTML = animal_obj.daily_expense
     rem_but.addEventListener("click", async () => {
-        const resp = await fetch(`/srv/animals/${indx}`, {
+        const resp = await fetch(`/srv/animals/${animal_obj.id}`, {
             method: "DELETE"
 
         })
+        update_cards()
 
     });
 
     ed_but.addEventListener("click", () => {
         document.getElementById("title_cr_ed").innerHTML = "Edit animals";
         on_click_tab("create");
-        setup_edit(animal_obj, indx);
+        setup_edit(animal_obj);
 
 
     })
@@ -107,7 +108,7 @@ function generate_card(animal_obj, indx) {
     return card;
 }
 
-function setup_edit(animal_obj, id) {
+function setup_edit(animal_obj) {
 
 
     animals_name.value = animal_obj.name
@@ -115,7 +116,7 @@ function setup_edit(animal_obj, id) {
     daily_expense.value = animal_obj.daily_expense
     type_animal.value = animal_obj.type_animal
 
-    currently_edited_id = id
+    currently_edited_id = animal_obj.id
 
 }
 
